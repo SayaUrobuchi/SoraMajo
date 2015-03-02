@@ -1,0 +1,3 @@
+
+var image = {};
+var audio = {};
