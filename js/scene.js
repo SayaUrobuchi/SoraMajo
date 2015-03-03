@@ -31,9 +31,9 @@ function SceneManager()
 		self.current.keydown(e);
 	}
 	
-	self.update = function ()
+	self.update = function (g)
 	{
-		self.current.update();
+		self.current.update(g);
 	}
 	
 	self.deinit = function ()

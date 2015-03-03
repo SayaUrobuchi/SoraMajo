@@ -1,10 +1,12 @@
 
 var scene;
-var screen;
+var canvas;
+var c_context;
 
 function preload()
 {
 	var cnt = 0;
+	image.__cnt = 0;
 	for (var key in IMAGE)
 	{
 		cnt++;
@@ -19,6 +21,7 @@ function preload()
 	image.__max_cnt = cnt;
 	
 	cnt = 0;
+	audio.__cnt = 0;
 	for (var key in AUDIO)
 	{
 		cnt++;
@@ -28,7 +31,7 @@ function preload()
 			sound.addEventListener("canplaythrough", preload_audio_callback, true);
 			sound.preload = 'auto';
 			sound.src = AUDIO[key];
-			audio[key] = sound;
+			audio[AUDIO[key]] = sound;
 		}
 	}
 	audio.__max_cnt = cnt;
@@ -58,8 +61,10 @@ function init()
 {
 	scene = SceneManager();
 	
-	var canvas = document.getElementById("canvas");
-	screen = canvas.getContext("2d");
+	canvas = document.getElementById("canvas");
+	canvas.width = UI.SCREEN.WIDTH;
+	canvas.height = UI.SCREEN.HEIGHT;
+	c_context = canvas.getContext("2d");
 	
 	document.addEventListener("keydown", keydown);
 	document.addEventListener("keyup", keyup);
@@ -67,18 +72,18 @@ function init()
 
 function update()
 {
-	for (var i=0; i<scene.length; i++)
-	{
-		scene.update(screen);
-	}
+	c_context.fillStyle = COLOR.BLACK;
+	c_context.fillRect(0, 0, canvas.width, canvas.height);
+	scene.update(c_context);
 }
 
 function main()
 {
 	init();
 	scene.push(STGScene());
-	setInterval(update, 30);
+	setInterval(update, 32);
 }
 
-window.onload = main;
 preload();
+window.onload = main;
+
