@@ -4,6 +4,7 @@ var audio = {};
 
 var IMAGE = {
 	MINYAN_BATTLE: "p/minyan.png", 
+	PURIN_BATTLE: "p/purin.png", 
 };
 var AUDIO = {};
 
@@ -12,10 +13,28 @@ function is_preload_complete()
 	return image.__cnt == image.__max_cnt && audio.__cnt == audio.__max_cnt;
 }
 
+var enemy = {};
+
+var KEY = {
+	LEFT: 37, 
+	UP: 38, 
+	RIGHT: 39, 
+	DOWN: 40, 
+	Z: 90, 
+};
+
+KEY.ACCEPT = {};
+KEY.ACCEPT[KEY.MOVE_LEFT = KEY.LEFT] = true;
+KEY.ACCEPT[KEY.MOVE_UP = KEY.UP] = true;
+KEY.ACCEPT[KEY.MOVE_RIGHT = KEY.RIGHT] = true;
+KEY.ACCEPT[KEY.MOVE_DOWN = KEY.DOWN] = true;
+KEY.ACCEPT[KEY.FIRE = KEY.Z] = true;
+
 var COLOR = {
 	WHITE: "white", 
 	GRAY: "#CCCCCC", 
 	BLACK: "#000", 
+	RED: "#FF0000", 
 	TRANSPARENT: rgba(0, 0, 0, 0), 
 };
 
@@ -26,8 +45,8 @@ var UI = {
 };
 
 UI.SCREEN = {
-	WIDTH: 1000, 
-	HEIGHT: 800, 
+	WIDTH: 800, 
+	HEIGHT: 600, 
 };
 
 UI.LOADING = {
@@ -36,5 +55,13 @@ UI.LOADING = {
 	FONT: "60px "+UI.DEFAULT_FONT, 
 	ANI_IN_FCNT: 24, 
 	ANI_OUT_FCNT: 8, 
+};
+
+UI.SUB = {
+	OFFSET_X: 500, 
+	OFFSET_Y: 0, 
+	WIDTH: 300, 
+	HEIGHT: UI.SCREEN.HEIGHT, 
+	BACKGROUND_COLOR: rgb(0x44, 0x44, 0xAA), 
 };
 

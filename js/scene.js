@@ -23,12 +23,12 @@ function SceneManager()
 	
 	self.keyup = function (e)
 	{
-		self.current.keyup(e);
+		return self.current.keyup(e);
 	}
 	
 	self.keydown = function (e)
 	{
-		self.current.keydown(e);
+		return self.current.keydown(e);
 	}
 	
 	self.update = function (g)

@@ -81,7 +81,7 @@ function main()
 {
 	init();
 	scene.push(STGScene());
-	setInterval(update, 32);
+	setInterval(update, 16);
 }
 
 preload();
