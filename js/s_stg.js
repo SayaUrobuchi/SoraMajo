@@ -67,7 +67,7 @@ function STGScene()
 			break;
 		case STG.READY:
 			self.state = STG.BATTLE;
-			self.group_list[GROUP.ENEMY].push(Enemy(enemy.purin));
+			self.add_enemy(enemy.purin);
 			break;
 		case STG.START:
 			break;
@@ -192,19 +192,20 @@ function STGScene()
 					l.length = q;
 				}
 			}
-			for (var j=0; j<attack_list.length; j++)
+			for (var k=0; k<group_list.length; k++)
 			{
-				var atk = attack_list[j];
-				if (!atk.is_disappear(self))
+				var tar = group_list[k];
+				if (!tar.is_disappear(self))
 				{
-					for (var k=0; k<group_list.length; k++)
+					for (var j=0; j<attack_list.length; j++)
 					{
-						if (!group_list[k].is_disappear(self))
+						var atk = attack_list[j];
+						if (!atk.is_disappear(self))
 						{
-							if (is_collide(atk.get_collider(), group_list[k].get_collider()))
+							if (is_collide(atk.get_collider(), tar.get_collider()))
 							{
-								atk.hit(self, group_list[k]);
-								group_list[k].hit(self, atk);
+								atk .hit(self, tar);
+								tar.hit(self, atk);
 							}
 						}
 					}
@@ -231,12 +232,31 @@ function STGScene()
 		self.attack_list[target].push(shot);
 	}
 	
+	self.add_enemy = function (data)
+	{
+		var e = Enemy(enemy.purin);
+		self.group_list[GROUP.ENEMY].push(e);
+		self.attack_list[GROUP.MIKATA].push(e);
+	}
+	
+	self.get_mchara = function ()
+	{
+		return group_list[GROUP.MIKATA][0];
+	}
+	
 	self.keyup = function (e)
 	{
 		var key = e.which || e.keyCode;
 		if (KEY.ACCEPT[key])
 		{
-			self.input[key] = false;
+			switch (self.state)
+			{
+			case STG.EVENT:
+				break;
+			default:
+				self.input[key] = false;
+				break;
+			}
 			return false;
 		}
 		return true;
@@ -247,7 +267,14 @@ function STGScene()
 		var key = e.which || e.keyCode;
 		if (KEY.ACCEPT[key])
 		{
-			self.input[key] = true;
+			switch (self.state)
+			{
+			case STG.EVENT:
+				break;
+			default:
+				self.input[key] = true;
+				break;
+			}
 			return false;
 		}
 		return true;

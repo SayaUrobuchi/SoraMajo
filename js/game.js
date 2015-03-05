@@ -35,6 +35,8 @@ var COLOR = {
 	GRAY: "#CCCCCC", 
 	BLACK: "#000", 
 	RED: "#FF0000", 
+	GREEN: "#00FF00", 
+	BLUE: "#0000FF", 
 	TRANSPARENT: rgba(0, 0, 0, 0), 
 };
 
@@ -63,5 +65,10 @@ UI.SUB = {
 	WIDTH: 300, 
 	HEIGHT: UI.SCREEN.HEIGHT, 
 	BACKGROUND_COLOR: rgb(0x44, 0x44, 0xAA), 
+};
+
+UI.ENEMY = {
+	LVL_NAME_FONT: "20px "+UI.DEFAULT_FONT, 
+	HP_ANI_SPD: 0.01, 
 };
 
