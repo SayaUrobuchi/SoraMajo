@@ -94,67 +94,71 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 					]);
 					self.aang += Math.PI / 6;
 				}
-				if (self.bcnt++ >= 144)
+				if (self.bcnt++ >= 144-(40*(1-self.real_hp_rate)))
 				{
 					self.bcnt = 0;
-					var ang = self.angle_to(field.get_mchara());
-					var offset = 12;
-					var r = 8;
-					var dr = 6;
-					var spd = 4;
-					var aspd = 0.2;
-					var ang_shift = deg(5);
-					var shot_ang = ang+ang_shift;
-					for (var i=0; i<8; i++)
+					var mc = field.get_mchara();
+					if (is_def(mc))
 					{
-						self.fire(field, [
-							extend(SHOT_TEMPLATE, {
-								ox: 12*Math.cos(shot_ang), 
-								oy: 12*Math.sin(shot_ang), 
-								r: r, 
-								dr: dr, 
-								dx: Math.cos(shot_ang), 
-								dy: Math.sin(shot_ang), 
-								spd: spd+aspd*i, 
-								color: COLOR.GRAY, 
-								target: GROUP.MIKATA, 
-							}), 
-						]);
-					}
-					shot_ang = ang-ang_shift;
-					for (var i=0; i<8; i++)
-					{
-						self.fire(field, [
-							extend(SHOT_TEMPLATE, {
-								ox: 12*Math.cos(shot_ang), 
-								oy: 12*Math.sin(shot_ang), 
-								r: r, 
-								dr: dr, 
-								dx: Math.cos(shot_ang), 
-								dy: Math.sin(shot_ang), 
-								spd: spd+aspd*i, 
-								color: COLOR.GRAY, 
-								target: GROUP.MIKATA, 
-							}), 
-						]);
-					}
-					shot_ang = ang;
-					aspd = 0.4;
-					for (var i=0; i<8; i++)
-					{
-						self.fire(field, [
-							extend(SHOT_TEMPLATE, {
-								ox: 12*Math.cos(shot_ang), 
-								oy: 12*Math.sin(shot_ang), 
-								r: r, 
-								dr: dr, 
-								dx: Math.cos(shot_ang), 
-								dy: Math.sin(shot_ang), 
-								spd: spd+aspd*i, 
-								color: COLOR.GRAY, 
-								target: GROUP.MIKATA, 
-							}), 
-						]);
+						var ang = self.angle_to(field.get_mchara());
+						var offset = 12;
+						var r = 8;
+						var dr = 6;
+						var spd = 4;
+						var aspd = 0.25;
+						var ang_shift = deg(5);
+						var shot_ang = ang+ang_shift;
+						for (var i=0; i<8; i++)
+						{
+							self.fire(field, [
+								extend(SHOT_TEMPLATE, {
+									ox: 12*Math.cos(shot_ang), 
+									oy: 12*Math.sin(shot_ang), 
+									r: r, 
+									dr: dr, 
+									dx: Math.cos(shot_ang), 
+									dy: Math.sin(shot_ang), 
+									spd: spd+aspd*i, 
+									color: COLOR.GRAY, 
+									target: GROUP.MIKATA, 
+								}), 
+							]);
+						}
+						shot_ang = ang-ang_shift;
+						for (var i=0; i<8; i++)
+						{
+							self.fire(field, [
+								extend(SHOT_TEMPLATE, {
+									ox: 12*Math.cos(shot_ang), 
+									oy: 12*Math.sin(shot_ang), 
+									r: r, 
+									dr: dr, 
+									dx: Math.cos(shot_ang), 
+									dy: Math.sin(shot_ang), 
+									spd: spd+aspd*i, 
+									color: COLOR.GRAY, 
+									target: GROUP.MIKATA, 
+								}), 
+							]);
+						}
+						shot_ang = ang;
+						aspd = 0.4;
+						for (var i=0; i<8; i++)
+						{
+							self.fire(field, [
+								extend(SHOT_TEMPLATE, {
+									ox: 12*Math.cos(shot_ang), 
+									oy: 12*Math.sin(shot_ang), 
+									r: r, 
+									dr: dr, 
+									dx: Math.cos(shot_ang), 
+									dy: Math.sin(shot_ang), 
+									spd: spd+aspd*i, 
+									color: COLOR.GRAY, 
+									target: GROUP.MIKATA, 
+								}), 
+							]);
+						}
 					}
 				}
 				break;
