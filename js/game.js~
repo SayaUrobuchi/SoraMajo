@@ -44,7 +44,7 @@ var COLOR = {
 	RED: "#FF0000", 
 	GREEN: "#00FF00", 
 	BLUE: "#0000FF", 
-	DARK_RED: "#AA0000", 
+	DARK_RED: "#FF3030", 
 	TRANSPARENT: rgba(0, 0, 0, 0), 
 };
 

@@ -46,10 +46,7 @@ function Shot(data)
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE)
-		{
-			data.move(field, self);
-		}
+		data.move(field, self);
 	}
 	
 	self.draw = function (field, g)

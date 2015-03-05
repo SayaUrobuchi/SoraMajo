@@ -81,31 +81,28 @@ function MainChara()
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE)
+		var dx = 0, dy = 0;
+		if (field.input[KEY.MOVE_LEFT])
 		{
-			var dx = 0, dy = 0;
-			if (field.input[KEY.MOVE_LEFT])
-			{
-				dx--;
-			}
-			if (field.input[KEY.MOVE_UP])
-			{
-				dy--;
-			}
-			if (field.input[KEY.MOVE_RIGHT])
-			{
-				dx++;
-			}
-			if (field.input[KEY.MOVE_DOWN])
-			{
-				dy++;
-			}
-			self.move(field, dx, dy, self.spd);
+			dx--;
+		}
+		if (field.input[KEY.MOVE_UP])
+		{
+			dy--;
+		}
+		if (field.input[KEY.MOVE_RIGHT])
+		{
+			dx++;
+		}
+		if (field.input[KEY.MOVE_DOWN])
+		{
+			dy++;
+		}
+		self.move(field, dx, dy, self.spd);
 		
-			if (field.input[KEY.FIRE])
-			{
-				self.fire(field, self.attack.norm);
-			}
+		if (field.input[KEY.FIRE])
+		{
+			self.fire(field, self.attack.norm);
 		}
 	}
 	

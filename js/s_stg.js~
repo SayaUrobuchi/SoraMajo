@@ -316,7 +316,7 @@ function STGScene()
 			g.font = UI.TALK.FONT;
 			g.fillStyle = COLOR.TEXT;
 			g.fillText("丁丁", UI.TALK.NAME_X, UI.TALK.NAME_Y);
-			var text = ["咱第一行", "一二三四五六七八九十一二三四五六", "aaaaaa", "bbbbb四"];
+			var text = ["咱第一行", "一二三四五六七八九十一二三四五六"];
 			for (var i=0; i<text.length; i++)
 			{
 				g.fillText(text[i], UI.TALK.TEXT_X, UI.TALK.TEXT_Y+UI.TALK.TEXT_HEIGHT*i);

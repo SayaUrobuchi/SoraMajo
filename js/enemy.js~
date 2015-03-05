@@ -40,12 +40,9 @@ function Enemy(data)
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE)
-		{
-			self.data.move(field, self);
-			self.data.shot(field, self);
-			self.update_hp(field);
-		}
+		self.data.move(field, self);
+		self.data.shot(field, self);
+		self.update_hp(field);
 	}
 	
 	self.update_hp = function (field)

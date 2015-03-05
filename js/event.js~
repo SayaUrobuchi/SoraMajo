@@ -1,0 +1,18 @@
+
+function STGEvent(data)
+{
+	var self = {};
+	
+	self.init = function ()
+	{
+	}
+	
+	self.update = function (field, g)
+	{
+	}
+	
+	self.init();
+	
+	return self;
+}
+

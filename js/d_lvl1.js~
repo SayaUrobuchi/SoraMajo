@@ -188,6 +188,8 @@ level[1] = extend(LEVEL_TEMPLATE, {
 			}), 
 		], 
 		win: [
+			LEVEL_TALK({
+			}), 
 		], 
 	}, 
 });
