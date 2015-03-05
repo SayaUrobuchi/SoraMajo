@@ -241,7 +241,7 @@ function STGScene()
 	
 	self.get_mchara = function ()
 	{
-		return group_list[GROUP.MIKATA][0];
+		return self.group_list[GROUP.MIKATA][0];
 	}
 	
 	self.keyup = function (e)

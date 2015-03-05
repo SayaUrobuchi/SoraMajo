@@ -88,6 +88,11 @@ function Chara()
 		};
 	}
 	
+	self.angle_to = function (target)
+	{
+		return Math.atan2(target.y-self.y, target.x-self.x);
+	}
+	
 	self.init();
 	
 	return self;

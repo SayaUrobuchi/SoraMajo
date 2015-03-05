@@ -45,6 +45,11 @@ function rgb(r, g, b)
 	return rgba(r, g, b, 1.0);
 }
 
+function deg(ang)
+{
+	return ang*Math.PI/180;
+}
+
 function linear(st, ed, now)
 {
 	return st + (ed-st)*now;
