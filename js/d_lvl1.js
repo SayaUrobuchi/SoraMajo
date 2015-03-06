@@ -163,9 +163,6 @@ level[1] = extend(LEVEL_TEMPLATE, {
 				img: TACHIE.MINYAN_GOOD, 
 				img_loc: STG_TALK.TACHIE_LEFT, 
 			}), 
-			extend(LEVEL_ENEMY_TEMPLATE, {
-				enemy: enemy.purin, 
-			}), 
 			extend(LEVEL_TALK_TEMPLATE, {
 				name: "丁丁", 
 				text: [
@@ -183,8 +180,132 @@ level[1] = extend(LEVEL_TEMPLATE, {
 					"喂、決鬥啦！！", 
 				], 
 				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_LOL, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"…啊？為毛非跟你決鬥不可啊。", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_NOTGOOD, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"當然是太閒啦！", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_LOL, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"給我好好工作啊喂！", 
+					"風紀的維持如何了？", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_ANGRY, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"糟得不能再糟。", 
+					"沒人違法亂紀，也就沒人可殺。", 
+					"簡直無聊透頂！", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
 				img: TACHIE.PURIN_NOTGOOD, 
 				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"那不是很和平嗎！", 
+					"天下太平萬萬歲啦！", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_SAD, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"大錯特錯！！", 
+					"身為魔法少女、擁有一身魔力，", 
+					"卻完全無用武之地！", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_NOTGOOD, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"沒有惡人可殺、", 
+					"也就沒理由失手誤傷無辜、", 
+					"沒理由順手破壞城鎮了啊！", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_NOTGOOD, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"你把風紀當成什麼了！？", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_ANGRY, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"合法殺手！（眼睛一亮", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_LOL, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"看來有必要再教育呢…", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_HAKI, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "丁丁", 
+				text: [
+					"哦哦，想動粗嗎？", 
+					"那麼就算是女僕長，也只好痛下決心、", 
+					"揮下風紀的制裁之拳啦！", 
+				], 
+				text_loc: STG_TALK.TEXT_BOT, 
+				img: TACHIE.PURIN_LOL, 
+				img_loc: STG_TALK.TACHIE_RIGHT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
+					"可笑！", 
+					"在穹之聖地，本王就是法律！", 
+					"好吧，既然如此想死，", 
+					"就先陪你玩玩，之後再好好『懲罰』！", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_HAKI, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_ENEMY_TEMPLATE, {
+				enemy: enemy.purin, 
 			}), 
 		], 
 		win: [

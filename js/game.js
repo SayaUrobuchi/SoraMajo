@@ -10,6 +10,10 @@ var IMAGE = {
 	MINYAN_BATTLE: "p/minyan.png", 
 	PURIN_BATTLE: "p/purin.png", 
 	MINYAN_GOOD: "p/minyan_good.png", 
+	MINYAN_NOTGOOD: "p/minyan_notgood.png", 
+	MINYAN_ANGRY: "p/minyan_angry.png", 
+	MINYAN_SAD: "p/minyan_sad.png", 
+	MINYAN_HAKI: "p/minyan_haki.png", 
 	PURIN_LOL: "p/purin_lol.png", 
 	PURIN_NOTGOOD: "p/purin_notgood.png", 
 };
@@ -28,6 +32,7 @@ var KEY = {
 	RIGHT: 39, 
 	DOWN: 40, 
 	Z: 90, 
+	X: 88, 
 };
 
 KEY.ACCEPT = {};
@@ -36,6 +41,7 @@ KEY.ACCEPT[KEY.MOVE_UP = KEY.UP] = true;
 KEY.ACCEPT[KEY.MOVE_RIGHT = KEY.RIGHT] = true;
 KEY.ACCEPT[KEY.MOVE_DOWN = KEY.DOWN] = true;
 KEY.ACCEPT[KEY.FIRE = KEY.Z] = true;
+KEY.ACCEPT[KEY.BOMB = KEY.X] = true;
 
 var COLOR = {
 	WHITE: "white", 
@@ -45,11 +51,13 @@ var COLOR = {
 	GREEN: "#00FF00", 
 	BLUE: "#0000FF", 
 	DARK_RED: "#AA0000", 
+	DARK_RED2: "#440000", 
 	TRANSPARENT: rgba(0, 0, 0, 0), 
 };
 
 COLOR.TEXT = COLOR.GRAY;
 COLOR.TALK_BACK = COLOR.DARK_RED;
+COLOR.TALK_BACK_INACTIVE = COLOR.DARK_RED2;
 
 var UI = {
 	DEFAULT_FONT: "DFKai-SB", 

@@ -26,6 +26,15 @@ var STGEVENT = {
 	ENEMY: 2, 
 };
 
+var STG_TALK = {
+	TEXT_TOP: 0, 
+	TEXT_BOT: 1, 
+	TEXT_MID: 2, 
+	TACHIE_LEFT: 0, 
+	TACHIE_RIGHT: 1, 
+	KEY_CD: 8, 
+};
+
 function STGScene()
 {
 	var self = Scene();
@@ -240,12 +249,13 @@ function STGScene()
 		{
 			if (!self.event || self.event_idx >= self.event.length)
 			{
-				self.stage = self.next_stage;
+				self.state = self.next_state;
 				self.ss = STG.READY;
 				return;
 			}
 			self.cur_event = self.event[self.event_idx++];
 			self.ss = STG.READY;
+			self.clear_input();
 		}
 		switch (self.cur_event.type)
 		{
@@ -272,120 +282,105 @@ function STGScene()
 		var tachie = self.tachie[1-self.top_tachie];
 		var x = (self.top_tachie == 0 ? UI.TALK.TACHIE_RIGHT_X : UI.TALK.TACHIE_LEFT_X);
 		var y = UI.TALK.TACHIE_Y;
-		if (tachie || true)
+		if (tachie)
 		{
-			g.drawImage(image.PURIN_LOL, x-352/2, y-415/2);
+			self.update_talk_tachie(g, tachie, x, y);
 		}
 		tachie = self.tachie[self.top_tachie];
 		x = (self.top_tachie == 1 ? UI.TALK.TACHIE_RIGHT_X : UI.TALK.TACHIE_LEFT_X);
-		if (tachie || true)
+		if (tachie)
 		{
-			g.drawImage(image.MINYAN_GOOD, x-352/2, y-415/2);
+			self.update_talk_tachie(g, tachie, x, y);
 		}
 		// top
-		if (self.top_talk || true)
+		var talk = self.top_talk;
+		if (talk)
 		{
-			g.translate(UI.TALK.X, UI.TALK.TOP_Y);
-			g.beginPath();
-			/*
-			 10--------20
-			01          31
-			|            |
-			02          32
-			 13----+ --23
-				   |/
-			*/
-			var x0 = 0, x1 = UI.TALK.CORN_SIZE, x2 = UI.TALK.WIDTH+UI.TALK.CORN_SIZE, x3 = x2+UI.TALK.CORN_SIZE;
-			var y0 = 0, y1 = UI.TALK.CORN_SIZE, y2 = UI.TALK.HEIGHT+UI.TALK.CORN_SIZE, y3 = y2+UI.TALK.CORN_SIZE;
-			g.moveTo(x1, y0);
-			g.lineTo(x2, y0);
-			g.arcTo(x3, y0, x3, y1, UI.TALK.CORN_SIZE);
-			g.lineTo(x3, y2);
-			g.arcTo(x3, y3, x2, y3, UI.TALK.CORN_SIZE);
-			g.lineTo(UI.TALK.FROM_X1, y3);
-			g.lineTo(UI.TALK.FROM_X1-UI.TALK.FROM_OX, y3+UI.TALK.FROM_OY);
-			g.lineTo(UI.TALK.FROM_X0, y3);
-			g.lineTo(x1, y3);
-			g.arcTo(x0, y3, x0, y2, UI.TALK.CORN_SIZE);
-			g.lineTo(x0, y1);
-			g.arcTo(x0, y0, x1, y0, UI.TALK.CORN_SIZE);
-			g.fillStyle = COLOR.TALK_BACK;
-			g.fill();
-			g.strokeStyle = COLOR.GREEN;
-			g.stroke();
-			g.font = UI.TALK.FONT;
-			g.fillStyle = COLOR.TEXT;
-			g.fillText("丁丁", UI.TALK.NAME_X, UI.TALK.NAME_Y);
-			var text = ["咱第一行", "一二三四五六七八九十一二三四五六", "aaaaaa", "bbbbb四"];
-			for (var i=0; i<text.length; i++)
-			{
-				g.fillText(text[i], UI.TALK.TEXT_X, UI.TALK.TEXT_Y+UI.TALK.TEXT_HEIGHT*i);
-			}
-			g.translate(-UI.TALK.X, -UI.TALK.TOP_Y);
+			self.update_talk_dialog(g, talk, UI.TALK.X, UI.TALK.TOP_Y, STG_TALK.TEXT_TOP);
 		}
 		// mid
-		if (self.mid_talk)
+		talk = self.mid_talk;
+		if (talk)
 		{
-			g.translate(UI.TALK.X, UI.TALK.MID_Y);
-			g.beginPath();
-			/*
-			 10--------20
-			01          31
-			|            |
-			02          32
-			 13----+ --23
-				   |/
-			*/
-			var x0 = 0, x1 = UI.TALK.CORN_SIZE, x2 = UI.TALK.WIDTH+UI.TALK.CORN_SIZE, x3 = x2+UI.TALK.CORN_SIZE;
-			var y0 = 0, y1 = UI.TALK.CORN_SIZE, y2 = UI.TALK.HEIGHT+UI.TALK.CORN_SIZE, y3 = y2+UI.TALK.CORN_SIZE;
-			g.moveTo(x1, y0);
-			g.lineTo(x2, y0);
-			g.arcTo(x3, y0, x3, y1, UI.TALK.CORN_SIZE);
-			g.lineTo(x3, y2);
-			g.arcTo(x3, y3, x2, y3, UI.TALK.CORN_SIZE);
-			g.lineTo(x1, y3);
-			g.arcTo(x0, y3, x0, y2, UI.TALK.CORN_SIZE);
-			g.lineTo(x0, y1);
-			g.arcTo(x0, y0, x1, y0, UI.TALK.CORN_SIZE);
-			g.fillStyle = COLOR.TALK_BACK;
-			g.fill();
-			g.strokeStyle = COLOR.GREEN;
-			g.stroke();
-			g.translate(-UI.TALK.X, -UI.TALK.MID_Y);
+			self.update_talk_dialog(g, talk, UI.TALK.X, UI.TALK.MID_Y, STG_TALK.TEXT_MID);
 		}
 		// bot
-		if (self.bot_talk || true)
+		talk = self.bot_talk;
+		if (talk)
 		{
-			g.translate(UI.TALK.X, UI.TALK.BOT_Y);
-			g.beginPath();
-			/*
-			 10--------20
-			01          31
-			|            |
-			02          32
-			 13----+ --23
-				   |/
-			*/
-			var x0 = 0, x1 = UI.TALK.CORN_SIZE, x2 = UI.TALK.WIDTH+UI.TALK.CORN_SIZE, x3 = x2+UI.TALK.CORN_SIZE;
-			var y0 = 0, y1 = UI.TALK.CORN_SIZE, y2 = UI.TALK.HEIGHT+UI.TALK.CORN_SIZE, y3 = y2+UI.TALK.CORN_SIZE;
-			g.moveTo(x1, y0);
+			self.update_talk_dialog(g, talk, UI.TALK.X, UI.TALK.BOT_Y, STG_TALK.TEXT_BOT);
+		}
+		// input handle
+		if (self.input[KEY.FIRE] || self.input[KEY.BOMB])
+		{
+			self.ss = STG.DONE;
+		}
+	}
+	
+	self.update_talk_tachie = function (g, t, x, y)
+	{
+		g.drawImage(t.img, x-t.w/2, y-t.h/2);
+	}
+	
+	self.update_talk_dialog = function (g, t, x, y, loc)
+	{
+		g.translate(x, y);
+		g.beginPath();
+		/*
+		 10--------20
+		01          31
+		|            |
+		02          32
+		 13----+ --23
+			   |/
+		*/
+		var x0 = 0, x1 = UI.TALK.CORN_SIZE, x2 = UI.TALK.WIDTH+UI.TALK.CORN_SIZE, x3 = x2+UI.TALK.CORN_SIZE;
+		var y0 = 0, y1 = UI.TALK.CORN_SIZE, y2 = UI.TALK.HEIGHT+UI.TALK.CORN_SIZE, y3 = y2+UI.TALK.CORN_SIZE;
+		g.moveTo(x1, y0);
+		if (loc == STG_TALK.TEXT_BOT)
+		{
 			g.lineTo(UI.TALK.FROM_X0, y0);
 			g.lineTo(UI.TALK.FROM_X0+UI.TALK.FROM_OX, y0-UI.TALK.FROM_OY);
 			g.lineTo(UI.TALK.FROM_X1, y0);
-			g.lineTo(x2, y0);
-			g.arcTo(x3, y0, x3, y1, UI.TALK.CORN_SIZE);
-			g.lineTo(x3, y2);
-			g.arcTo(x3, y3, x2, y3, UI.TALK.CORN_SIZE);
-			g.lineTo(x1, y3);
-			g.arcTo(x0, y3, x0, y2, UI.TALK.CORN_SIZE);
-			g.lineTo(x0, y1);
-			g.arcTo(x0, y0, x1, y0, UI.TALK.CORN_SIZE);
-			g.fillStyle = COLOR.TALK_BACK;
-			g.fill();
-			g.strokeStyle = COLOR.GREEN;
-			g.stroke();
-			g.translate(-UI.TALK.X, -UI.TALK.BOT_Y);
 		}
+		g.lineTo(x2, y0);
+		g.arcTo(x3, y0, x3, y1, UI.TALK.CORN_SIZE);
+		g.lineTo(x3, y2);
+		g.arcTo(x3, y3, x2, y3, UI.TALK.CORN_SIZE);
+		if (loc == STG_TALK.TEXT_TOP)
+		{
+			g.lineTo(UI.TALK.FROM_X1, y3);
+			g.lineTo(UI.TALK.FROM_X1-UI.TALK.FROM_OX, y3+UI.TALK.FROM_OY);
+			g.lineTo(UI.TALK.FROM_X0, y3);
+		}
+		g.lineTo(x1, y3);
+		g.arcTo(x0, y3, x0, y2, UI.TALK.CORN_SIZE);
+		g.lineTo(x0, y1);
+		g.arcTo(x0, y0, x1, y0, UI.TALK.CORN_SIZE);
+		if (self.dialog_top == loc)
+		{
+			g.fillStyle = COLOR.TALK_BACK;
+		}
+		else
+		{
+			g.fillStyle = COLOR.TALK_BACK_INACTIVE;
+		}
+		g.fill();
+		g.strokeStyle = COLOR.GREEN;
+		g.stroke();
+		g.font = UI.TALK.FONT;
+		g.textAlign = "left";
+		if (t.name)
+		{
+			g.fillStyle = COLOR.TEXT;
+			g.fillText(t.name, UI.TALK.NAME_X, UI.TALK.NAME_Y);
+		}
+		var text = t.text;
+		for (var i=0; i<text.length; i++)
+		{
+			g.fillText(text[i], UI.TALK.TEXT_X, UI.TALK.TEXT_Y+UI.TALK.TEXT_HEIGHT*i);
+		}
+		g.translate(-x, -y);
 	}
 	
 	self.update_sub = function (g)
@@ -416,6 +411,36 @@ function STGScene()
 	self.set_talk = function (data)
 	{
 		self.talk_data = data;
+		if (data.text)
+		{
+			if (data.text_loc == STG_TALK.TEXT_TOP)
+			{
+				self.top_talk = data;
+				self.dialog_top = STG_TALK.TEXT_TOP;
+			}
+			else if (data.text_loc == STG_TALK.TEXT_MID)
+			{
+				self.mid_talk = data;
+				self.dialog_top = STG_TALK.TEXT_MID;
+			}
+			else
+			{
+				self.bot_talk = data;
+				self.dialog_top = STG_TALK.TEXT_BOT;
+			}
+		}
+		if (data.img)
+		{
+			if (data.img_loc == STG_TALK.TACHIE_LEFT)
+			{
+				self.top_tachie = STG_TALK.TACHIE_LEFT;
+			}
+			else
+			{
+				self.top_tachie = STG_TALK.TACHIE_RIGHT;
+			}
+			self.tachie[self.top_tachie] = data.img;
+		}
 	}
 	
 	self.get_mchara = function ()
@@ -431,6 +456,14 @@ function STGScene()
 			switch (self.state)
 			{
 			case STG.EVENT:
+				if (key == KEY.FIRE)
+				{
+					self.input[key] = true;
+				}
+				else if (key == KEY.BOMB)
+				{
+					self.input[key] = false;
+				}
 				break;
 			default:
 				self.input[key] = false;
@@ -449,6 +482,10 @@ function STGScene()
 			switch (self.state)
 			{
 			case STG.EVENT:
+				if (key == KEY.BOMB)
+				{
+					self.input[key] = true;
+				}
 				break;
 			default:
 				self.input[key] = true;

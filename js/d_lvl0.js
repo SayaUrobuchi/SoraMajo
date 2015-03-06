@@ -1,14 +1,6 @@
 
 var level = {};
 
-var STG_TALK = {
-	TEXT_TOP: 0, 
-	TEXT_BOT: 1, 
-	TEXT_MID: 2, 
-	TACHIE_LEFT: 3, 
-	TACHIE_RIGHT: 4, 
-};
-
 var LEVEL_TEMPLATE = {
 };
 
@@ -30,6 +22,26 @@ var TACHIE_TEMPLATE = {
 var TACHIE = {
 	MINYAN_GOOD: extend(TACHIE_TEMPLATE, {
 		img: image.MINYAN_GOOD, 
+		w: 352, 
+		h: 415, 
+	}), 
+	MINYAN_NOTGOOD: extend(TACHIE_TEMPLATE, {
+		img: image.MINYAN_NOTGOOD, 
+		w: 352, 
+		h: 415, 
+	}), 
+	MINYAN_ANGRY: extend(TACHIE_TEMPLATE, {
+		img: image.MINYAN_ANGRY, 
+		w: 352, 
+		h: 415, 
+	}), 
+	MINYAN_SAD: extend(TACHIE_TEMPLATE, {
+		img: image.MINYAN_SAD, 
+		w: 352, 
+		h: 415, 
+	}), 
+	MINYAN_HAKI: extend(TACHIE_TEMPLATE, {
+		img: image.MINYAN_HAKI, 
 		w: 352, 
 		h: 415, 
 	}), 
