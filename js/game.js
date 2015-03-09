@@ -33,6 +33,7 @@ var KEY = {
 	DOWN: 40, 
 	Z: 90, 
 	X: 88, 
+	SHIFT: 16, 
 };
 
 KEY.ACCEPT = {};
@@ -42,6 +43,7 @@ KEY.ACCEPT[KEY.MOVE_RIGHT = KEY.RIGHT] = true;
 KEY.ACCEPT[KEY.MOVE_DOWN = KEY.DOWN] = true;
 KEY.ACCEPT[KEY.FIRE = KEY.Z] = true;
 KEY.ACCEPT[KEY.BOMB = KEY.X] = true;
+KEY.ACCEPT[KEY.MODE = KEY.SHIFT] = true;
 
 var COLOR = {
 	WHITE: "white", 

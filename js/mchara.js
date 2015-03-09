@@ -1,4 +1,13 @@
 
+var MCHAR_SHOT_TEMPLATE = extend(SHOT_TEMPLATE, {
+	r: 4, 
+	dr: 6, 
+	spd: 12, 
+	color: COLOR.GRAY, 
+	out_color: COLOR.GREEN, 
+	target: GROUP.ENEMY, 
+});
+
 function MainChara()
 {
 	var self = Chara();
@@ -11,8 +20,9 @@ function MainChara()
 		self.h = 32;
 		self.w2 = 16;
 		self.h2 = 16;
-		self.spd = 8;
-		self.r = 8;
+		self.spd = 6;
+		self.sspd = 2;
+		self.r = 4;
 		self.img_data = {
 			NORM: {
 				img: image.MINYAN_BATTLE, 
@@ -31,49 +41,55 @@ function MainChara()
 		self.img[0] = self.img_data.NORM;
 		self.attack = {
 			norm: [
-				extend(SHOT_TEMPLATE, {
+				extend(MCHAR_SHOT_TEMPLATE, {
 					ox: -10, 
 					oy: -14, 
-					r: 8, 
-					dr: 6, 
 					dx: 0, 
 					dy: -1, 
-					spd: 12, 
-					color: COLOR.GRAY, 
-					target: GROUP.ENEMY, 
 				}), 
-				extend(SHOT_TEMPLATE, {
+				extend(MCHAR_SHOT_TEMPLATE, {
 					ox: 10, 
 					oy: -14, 
-					r: 8, 
-					dr: 6, 
 					dx: 0, 
 					dy: -1, 
-					spd: 12, 
-					color: COLOR.GRAY, 
-					target: GROUP.ENEMY, 
 				}), 
-				extend(SHOT_TEMPLATE, {
+				extend(MCHAR_SHOT_TEMPLATE, {
 					ox: -16, 
 					oy: -4, 
-					r: 8, 
-					dr: 6, 
 					dx: -0.1, 
 					dy: -1, 
-					spd: 12, 
-					color: COLOR.GRAY, 
-					target: GROUP.ENEMY, 
 				}), 
-				extend(SHOT_TEMPLATE, {
+				extend(MCHAR_SHOT_TEMPLATE, {
 					ox: 16, 
 					oy: -4, 
-					r: 8, 
-					dr: 6, 
 					dx: 0.1, 
 					dy: -1, 
-					spd: 12, 
-					color: COLOR.GRAY, 
-					target: GROUP.ENEMY, 
+				}), 
+			], 
+			mode: [
+				extend(MCHAR_SHOT_TEMPLATE, {
+					ox: -10, 
+					oy: -14, 
+					dx: 0, 
+					dy: -1, 
+				}), 
+				extend(MCHAR_SHOT_TEMPLATE, {
+					ox: 10, 
+					oy: -14, 
+					dx: 0, 
+					dy: -1, 
+				}), 
+				extend(MCHAR_SHOT_TEMPLATE, {
+					ox: -16, 
+					oy: -4, 
+					dx: -0.05, 
+					dy: -1, 
+				}), 
+				extend(MCHAR_SHOT_TEMPLATE, {
+					ox: 16, 
+					oy: -4, 
+					dx: 0.05, 
+					dy: -1, 
 				}), 
 			], 
 		};
@@ -83,7 +99,7 @@ function MainChara()
 	{
 		if (field.state == STG.BATTLE)
 		{
-			var dx = 0, dy = 0;
+			var dx = 0, dy = 0, spd = self.spd;
 			if (field.input[KEY.MOVE_LEFT])
 			{
 				dx--;
@@ -100,11 +116,20 @@ function MainChara()
 			{
 				dy++;
 			}
-			self.move(field, dx, dy, self.spd);
+			if (field.input[KEY.MODE])
+			{
+				spd = self.sspd;
+			}
+			self.move(field, dx, dy, spd);
 		
 			if (field.input[KEY.FIRE])
 			{
-				self.fire(field, self.attack.norm);
+				var attack = self.attack.norm;
+				if (field.input[KEY.MODE])
+				{
+					attack = self.attack.mode;
+				}
+				self.fire(field, attack);
 			}
 		}
 	}

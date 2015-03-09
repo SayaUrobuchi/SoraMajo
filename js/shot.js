@@ -7,7 +7,7 @@ var SHOT = {
 		g.arc(self.x, self.y, self.data.dr, 0, 2*Math.PI, false);
 		g.fill();
 		g.lineWidth = 1;
-		g.strokeStyle = COLOR.RED;
+		g.strokeStyle = self.data.out_color;
 		g.stroke();
 	}, 
 	MOVE_LINE: function (field, self)

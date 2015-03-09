@@ -1,12 +1,4 @@
 
-var GROUP = {
-};
-
-GROUP.LIST = [
-	GROUP.MIKATA = 0, 
-	GROUP.ENEMY = 1, 
-];
-
 var STG = {
 	NONE: -1, 
 	LOADING: 0, 

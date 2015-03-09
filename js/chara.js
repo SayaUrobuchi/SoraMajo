@@ -1,4 +1,12 @@
 
+var GROUP = {
+};
+
+GROUP.LIST = [
+	GROUP.ENEMY = 0, 
+	GROUP.MIKATA = 1, 
+];
+
 function Chara()
 {
 	var self = Drawable();

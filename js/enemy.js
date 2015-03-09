@@ -12,6 +12,10 @@ var ENEMY = {
 			self.data.sx, self.data.sy, self.data.sw, self.data.sh, 
 			self.x-self.data.w/2, self.y-self.data.h/2, self.data.w, self.data.h);
 	}, 
+	DIE_DISAPPEAR: function (field, self)
+	{
+		self.disappear = true;
+	}, 
 };
 
 var ENEMY_TEMPLATE = {
@@ -19,6 +23,7 @@ var ENEMY_TEMPLATE = {
 	move: ENEMY.MOVE_NONE, 
 	shot: ENEMY.SHOT_NONE, 
 	draw: ENEMY.DRAW_NORMAL, 
+	die: ENEMY.DIE_DISAPPEAR, 
 };
 
 function Enemy(data)
@@ -87,6 +92,17 @@ function Enemy(data)
 		g.strokeStyle = COLOR.RED;
 		g.lineWidth = 0.2;
 		g.strokeText(self.data.lvl_name[self.lvl], field.range_x/2, 50);
+	}
+	
+	self.die = function (field)
+	{
+		self.lvl++;
+		self.state = 0;
+		self.hp = self.mhp;
+		if (self.lvl >= self.data.lvl_name.length)
+		{
+			self.data.die(field, self);
+		}
 	}
 	
 	self.init();

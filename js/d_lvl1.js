@@ -1,4 +1,12 @@
 
+var PURIN_SHOT_TEMPLATE = extend(SHOT_TEMPLATE, {
+	r: 4, 
+	dr: 6, 
+	color: COLOR.GRAY, 
+	out_color: COLOR.RED, 
+	target: GROUP.MIKATA, 
+});
+
 enemy.purin = extend(ENEMY_TEMPLATE, {
 	img: image.PURIN_BATTLE, 
 	sx: 32, 
@@ -13,8 +21,6 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 	lvl_name: [
 		"歡樂送、雷雷戳", 
 		"獵奇圖大亂射", 
-		"", 
-		"", 
 	], 
 	shot: function (field, self)
 	{
@@ -25,53 +31,80 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 			{
 			case 0:
 				self.acnt = 0;
-				self.aang = 0;
 				self.bcnt = 0;
 				self.state = 1;
 				break;
 			case 1:
+				self.acnt++;
+				if (self.acnt >= 15)
+				{
+					self.acnt = 0;
+					self.bcnt++;
+					var mc = field.get_mchara();
+					if (is_def(mc))
+					{
+						var ang = self.angle_to(mc);
+						var rang = ang + deg(Math.random()*60-30);
+						if (self.bcnt == 8)
+						{
+							self.bcnt = 0;
+							rang = ang;
+						}
+						var spd = 2;
+						self.fire(field, [
+							extend(PURIN_SHOT_TEMPLATE, {
+								dx: Math.cos(rang), 
+								dy: Math.sin(rang), 
+								spd: spd, 
+							}), 
+						]);
+					}
+				}
+				break;
+			}
+			break;
+		case 1:
+			switch (self.state)
+			{
+			case 0:
+				self.acnt = 0;
+				self.aang = 0;
+				self.bcnt = 0;
+				self.delay = 128;
+				self.state = 1;
+				break;
+			case 1:
+				self.delay--;
+				if (self.delay <= 0)
+				{
+					self.state = 2;
+				}
+				break;
+			case 2:
 				if (self.acnt++ >= 48)
 				{
 					self.acnt = 0;
 					var spd = 4;
-					var r = 8;
-					var dr = 6;
 					self.fire(field, [
-						extend(SHOT_TEMPLATE, {
-							r: r, 
-							dr: dr, 
-							dx: Math.sin(self.aang), 
-							dy: Math.cos(self.aang), 
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(self.aang), 
+							dy: Math.sin(self.aang), 
 							spd: spd, 
-							color: COLOR.GRAY, 
-							target: GROUP.MIKATA, 
 						}), 
-						extend(SHOT_TEMPLATE, {
-							r: r, 
-							dr: dr, 
-							dx: Math.sin(self.aang+Math.PI/2), 
-							dy: Math.cos(self.aang+Math.PI/2), 
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(self.aang+Math.PI/2), 
+							dy: Math.sin(self.aang+Math.PI/2), 
 							spd: spd, 
-							color: COLOR.GRAY, 
-							target: GROUP.MIKATA, 
 						}), 
-						extend(SHOT_TEMPLATE, {
-							r: r, 
-							dr: dr, 
-							dx: Math.sin(self.aang+Math.PI), 
-							dy: Math.cos(self.aang+Math.PI), 
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(self.aang+Math.PI), 
+							dy: Math.sin(self.aang+Math.PI), 
 							spd: spd, 
-							color: COLOR.GRAY, 
-							target: GROUP.MIKATA, 
 						}), 
-						extend(SHOT_TEMPLATE, {
-							r: r, 
-							dr: dr, 
-							dx: Math.sin(self.aang-Math.PI/2), 
-							dy: Math.cos(self.aang-Math.PI/2), 
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(self.aang-Math.PI/2), 
+							dy: Math.sin(self.aang-Math.PI/2), 
 							spd: spd, 
-							color: COLOR.GRAY, 
-							target: GROUP.MIKATA, 
 						}), 
 					]);
 					self.aang += Math.PI / 6;
@@ -82,10 +115,8 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 					var mc = field.get_mchara();
 					if (is_def(mc))
 					{
-						var ang = self.angle_to(field.get_mchara());
+						var ang = self.angle_to(mc);
 						var offset = 12;
-						var r = 8;
-						var dr = 6;
 						var spd = 4;
 						var aspd = 0.25;
 						var ang_shift = deg(5);
@@ -93,16 +124,12 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 						for (var i=0; i<8; i++)
 						{
 							self.fire(field, [
-								extend(SHOT_TEMPLATE, {
+								extend(PURIN_SHOT_TEMPLATE, {
 									ox: 12*Math.cos(shot_ang), 
 									oy: 12*Math.sin(shot_ang), 
-									r: r, 
-									dr: dr, 
 									dx: Math.cos(shot_ang), 
 									dy: Math.sin(shot_ang), 
 									spd: spd+aspd*i, 
-									color: COLOR.GRAY, 
-									target: GROUP.MIKATA, 
 								}), 
 							]);
 						}
@@ -110,16 +137,12 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 						for (var i=0; i<8; i++)
 						{
 							self.fire(field, [
-								extend(SHOT_TEMPLATE, {
+								extend(PURIN_SHOT_TEMPLATE, {
 									ox: 12*Math.cos(shot_ang), 
 									oy: 12*Math.sin(shot_ang), 
-									r: r, 
-									dr: dr, 
 									dx: Math.cos(shot_ang), 
 									dy: Math.sin(shot_ang), 
 									spd: spd+aspd*i, 
-									color: COLOR.GRAY, 
-									target: GROUP.MIKATA, 
 								}), 
 							]);
 						}
@@ -128,16 +151,12 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 						for (var i=0; i<8; i++)
 						{
 							self.fire(field, [
-								extend(SHOT_TEMPLATE, {
+								extend(PURIN_SHOT_TEMPLATE, {
 									ox: 12*Math.cos(shot_ang), 
 									oy: 12*Math.sin(shot_ang), 
-									r: r, 
-									dr: dr, 
 									dx: Math.cos(shot_ang), 
 									dy: Math.sin(shot_ang), 
 									spd: spd+aspd*i, 
-									color: COLOR.GRAY, 
-									target: GROUP.MIKATA, 
 								}), 
 							]);
 						}
