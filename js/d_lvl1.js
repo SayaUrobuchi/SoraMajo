@@ -44,7 +44,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 					if (is_def(mc))
 					{
 						var ang = self.angle_to(mc);
-						var rang = ang + deg(Math.random()*60-30);
+						var rang = ang + deg(fdice(2, 30, -30));
 						if (self.bcnt == 8)
 						{
 							self.bcnt = 0;

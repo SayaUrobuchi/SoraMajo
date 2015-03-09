@@ -50,6 +50,16 @@ function deg(ang)
 	return ang*Math.PI/180;
 }
 
+function fdice(x, y, z)
+{
+	var res = 0;
+	while (x-- > 0)
+	{
+		res += Math.random()*y;
+	}
+	return res+z;
+}
+
 function linear(st, ed, now)
 {
 	return st + (ed-st)*now;

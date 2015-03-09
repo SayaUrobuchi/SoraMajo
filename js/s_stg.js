@@ -452,7 +452,7 @@ function STGScene()
 				{
 					self.input[key] = true;
 				}
-				else if (key == KEY.BOMB)
+				else if (key == KEY.MODE)
 				{
 					self.input[key] = false;
 				}
@@ -474,7 +474,7 @@ function STGScene()
 			switch (self.state)
 			{
 			case STG.EVENT:
-				if (key == KEY.BOMB)
+				if (key == KEY.MODE)
 				{
 					self.input[key] = true;
 				}
