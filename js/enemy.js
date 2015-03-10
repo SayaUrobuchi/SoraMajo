@@ -87,11 +87,24 @@ function Enemy(data)
 	{
 		g.font = UI.ENEMY.LVL_NAME_FONT;
 		g.textAlign = "center";
+		g.textBaseline = "middle";
 		g.fillStyle = COLOR.TEXT;
 		g.fillText(self.data.lvl_name[self.lvl], field.range_x/2, 50);
 		g.strokeStyle = COLOR.RED;
 		g.lineWidth = 0.2;
 		g.strokeText(self.data.lvl_name[self.lvl], field.range_x/2, 50);
+	}
+	
+	self.hit = function (field, target)
+	{
+		if (!target.mc)
+		{
+			self.hp--;
+			if (self.hp <= 0)
+			{
+				self.die(field);
+			}
+		}
 	}
 	
 	self.die = function (field)

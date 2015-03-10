@@ -5,6 +5,7 @@ var STG = {
 	READY: 1, 
 	START: 2, 
 	BATTLE: 3, 
+	GAME_OVER: 4, 
 	EVENT: 8, 
 	DONE: 9, 
 	ANI_IN: 32, 
@@ -87,6 +88,14 @@ function STGScene()
 			break;
 		case STG.BATTLE:
 			break;
+		case STG.GAME_OVER:
+			if (self.ss == STG.READY)
+			{
+				self.idx = 0;
+				self.ss = STG.DONE;
+				self.clear_input();
+			}
+			break;
 		case STG.WIN:
 			break;
 		case STG.LOSE:
@@ -97,6 +106,7 @@ function STGScene()
 		self.update_loading(g);
 		self.update_main(g);
 		self.update_sub(g);
+		self.update_gameover(g);
 	}
 	
 	self.update_loading = function (g)
@@ -115,8 +125,9 @@ function STGScene()
 			self.l_fcnt++;
 			g.font = UI.LOADING.FONT;
 			g.textAlign = "center";
+			g.textBaseline = "middle";
 			var text_width = g.measureText(UI.LOADING.TEXT).width;
-			var color_width = pow2(0, text_width*20, self.l_fcnt/UI.LOADING.ANI_IN_FCNT);
+			var color_width = pow2_f(0, text_width*20, self.l_fcnt/UI.LOADING.ANI_IN_FCNT);
 			var color = g.createLinearGradient(0, 0, color_width, 0);
 			color.addColorStop(0, UI.LOADING.TEXT_COLOR);
 			color.addColorStop(1, COLOR.TRANSPARENT);
@@ -130,6 +141,7 @@ function STGScene()
 		case STG.WAITING:
 			g.font = UI.LOADING.FONT;
 			g.textAlign = "center";
+			g.textBaseline = "middle";
 			g.fillStyle = UI.LOADING.TEXT_COLOR;
 			g.fillText(UI.LOADING.TEXT, canvas.width/2, canvas.height/2);
 			if (is_preload_complete())
@@ -142,6 +154,7 @@ function STGScene()
 			self.l_fcnt++;
 			g.font = UI.LOADING.FONT;
 			g.textAlign = "center";
+			g.textBaseline = "middle";
 			g.fillStyle = UI.LOADING.TEXT_COLOR;
 			var temp = g.globalAlpha;
 			g.globalAlpha = 1 - (self.l_fcnt/UI.LOADING.ANI_OUT_FCNT);
@@ -155,6 +168,27 @@ function STGScene()
 		case STG.END:
 			self.state = STG.READY;
 			break;
+		}
+	}
+	
+	self.update_gameover = function (g)
+	{
+		if (self.state != STG.GAME_OVER || self.ss != STG.DONE)
+		{
+			return;
+		}
+		g.font = UI.GAMEOVER.FONT;
+		g.textAlign = "center";
+		g.textBaseline = "middle";
+		g.fillStyle = UI.GAMEOVER.COLOR;
+		g.fillText(UI.GAMEOVER.TEXT, UI.GAMEOVER.X, UI.GAMEOVER.Y);
+		g.font = UI.GAMEOVER.FONT2
+		g.fillStyle = UI.GAMEOVER.COLOR2;
+		g.fillText(UI.GAMEOVER.TEXT2, UI.GAMEOVER.X2, UI.GAMEOVER.Y2);
+		if (self.input[KEY.RE])
+		{
+			scene.pop();
+			scene.push(STGScene());
 		}
 	}
 	
@@ -179,7 +213,7 @@ function STGScene()
 		{
 			var attack_list = self.attack_list[i];
 			var group_list = self.group_list[i];
-			var ll = [attack_list, group_list];
+			var ll = [group_list, attack_list, ];
 			for (var k=0; k<ll.length; k++)
 			{
 				var l = ll[k];
@@ -247,7 +281,9 @@ function STGScene()
 			}
 			self.cur_event = self.event[self.event_idx++];
 			self.ss = STG.READY;
+			var temp = self.input[KEY.MODE];
 			self.clear_input();
+			self.input[KEY.MODE] = temp;
 		}
 		switch (self.cur_event.type)
 		{
@@ -303,7 +339,7 @@ function STGScene()
 			self.update_talk_dialog(g, talk, UI.TALK.X, UI.TALK.BOT_Y, STG_TALK.TEXT_BOT);
 		}
 		// input handle
-		if (self.input[KEY.FIRE] || self.input[KEY.BOMB])
+		if (self.input[KEY.FIRE] || self.input[KEY.MODE])
 		{
 			self.ss = STG.DONE;
 		}
@@ -362,6 +398,7 @@ function STGScene()
 		g.stroke();
 		g.font = UI.TALK.FONT;
 		g.textAlign = "left";
+		g.textBaseline = "top";
 		if (t.name)
 		{
 			g.fillStyle = COLOR.TEXT;
@@ -379,6 +416,7 @@ function STGScene()
 	{
 		g.translate(UI.SUB.OFFSET_X, UI.SUB.OFFSET_Y);
 		self.update_sub_background(g);
+		self.update_sub_zanki(g);
 		g.translate(-UI.SUB.OFFSET_X, -UI.SUB.OFFSET_Y);
 	}
 	
@@ -386,6 +424,20 @@ function STGScene()
 	{
 		g.fillStyle = UI.SUB.BACKGROUND_COLOR;
 		g.fillRect(0, 0, UI.SUB.WIDTH, UI.SUB.HEIGHT);
+	}
+	
+	self.update_sub_zanki = function (g)
+	{
+		g.fillStyle = COLOR.TEXT;
+		g.font = UI.SUB.FONT;
+		g.textAlign = "left";
+		g.textBaseline = "top";
+		g.fillText(UI.SUB.ZANKI_TEXT, UI.SUB.ZANKI_X, UI.SUB.ZANKI_Y);
+		var mc = self.get_mchara();
+		if (mc)
+		{
+			mc.draw_zanki(self, g);
+		}
 	}
 	
 	self.add_attack = function (shot, target)
@@ -438,6 +490,12 @@ function STGScene()
 	self.get_mchara = function ()
 	{
 		return self.group_list[GROUP.MIKATA][0];
+	}
+	
+	self.game_over = function ()
+	{
+		self.state = STG.GAME_OVER;
+		self.ss = STG.READY;
 	}
 	
 	self.keyup = function (e)

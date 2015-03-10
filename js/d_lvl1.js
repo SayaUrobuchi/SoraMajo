@@ -316,8 +316,17 @@ level[1] = extend(LEVEL_TEMPLATE, {
 				text: [
 					"可笑！", 
 					"在穹之聖地，本王就是法律！", 
+				], 
+				text_loc: STG_TALK.TEXT_TOP, 
+				img: TACHIE.MINYAN_HAKI, 
+				img_loc: STG_TALK.TACHIE_LEFT, 
+			}), 
+			extend(LEVEL_TALK_TEMPLATE, {
+				name: "彌兒", 
+				text: [
 					"好吧，既然如此想死，", 
-					"就先陪你玩玩，之後再好好『懲罰』！", 
+					"就先陪你玩玩，", 
+					"之後再好好『懲罰懲罰』！", 
 				], 
 				text_loc: STG_TALK.TEXT_TOP, 
 				img: TACHIE.MINYAN_HAKI, 

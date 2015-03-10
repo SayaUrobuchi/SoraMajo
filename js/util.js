@@ -60,12 +60,17 @@ function fdice(x, y, z)
 	return res+z;
 }
 
-function linear(st, ed, now)
+function linear_f(st, ed, now)
 {
 	return st + (ed-st)*now;
 }
 
-function pow2(st, ed, now)
+function sqrt_f(st, ed, now)
+{
+	return st + (ed-st)*Math.sqrt(now);
+}
+
+function pow2_f(st, ed, now)
 {
 	return st + (ed-st)*(now*now);
 }
