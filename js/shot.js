@@ -20,6 +20,35 @@ var SHOT = {
 		return self.hp <= 0 || 
 			self.x < 0 || self.x > field.range_x || self.y < 0 || self.y > field.range_y;
 	}, 
+	UPDATE_TO_MC: function (field, self)
+	{
+		var mc = field.get_mchara();
+		if (mc)
+		{
+			var ang = self.angle_to(mc);
+			var dang = Math.abs(ang-self.data.ang);
+			if (dang > self.data.limit_ang)
+			{
+				dang = self.data.limit_ang;
+			}
+			if (dang > self.data.limit_total_ang)
+			{
+				dang = self.data.limit_total_ang;
+				self.data.limit_total_ang = 0;
+			}
+			else
+			{
+				self.data.limit_total_ang -= dang;
+			}
+			if (ang < self.data.ang)
+			{
+				dang = -dang;
+			}
+			self.data.ang += dang;
+			self.data.dx = Math.cos(self.data.ang);
+			self.data.dy = Math.sin(self.data.ang);
+		}
+	}, 
 };
 
 var SHOT_TEMPLATE = {
@@ -28,6 +57,7 @@ var SHOT_TEMPLATE = {
 	color: COLOR.WHITE, 
 	draw: SHOT.DRAW_NORMAL, 
 	move: SHOT.MOVE_LINE, 
+	update: DO_NOTHING, 
 	is_disappear: SHOT.DISAPPEAR_OUT_RANGE, 
 };
 
@@ -48,6 +78,7 @@ function Shot(data)
 	{
 		if (field.state == STG.BATTLE)
 		{
+			data.update(field, self);
 			data.move(field, self);
 		}
 	}

@@ -243,20 +243,23 @@ function STGScene()
 					l.length = q;
 				}
 			}
-			for (var k=0; k<group_list.length; k++)
+			if (self.state == STG.BATTLE)
 			{
-				var tar = group_list[k];
-				if (!tar.is_disappear(self))
+				for (var k=0; k<group_list.length; k++)
 				{
-					for (var j=0; j<attack_list.length; j++)
+					var tar = group_list[k];
+					if (!tar.is_disappear(self))
 					{
-						var atk = attack_list[j];
-						if (!atk.is_disappear(self))
+						for (var j=0; j<attack_list.length; j++)
 						{
-							if (is_collide(atk.get_collider(), tar.get_collider()))
+							var atk = attack_list[j];
+							if (!atk.is_disappear(self))
 							{
-								atk.hit(self, tar);
-								tar.hit(self, atk);
+								if (is_collide(atk.get_collider(), tar.get_collider()))
+								{
+									atk.hit(self, tar);
+									tar.hit(self, atk);
+								}
 							}
 						}
 					}
@@ -558,6 +561,11 @@ function STGScene()
 		self.top_talk = null;
 		self.mid_talk = null;
 		self.bot_talk = null;
+	}
+	
+	self.clear_shot = function (group)
+	{
+		self.attack_list[group] = [];
 	}
 	
 	self.init();

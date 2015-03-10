@@ -20,6 +20,13 @@ var ENEMY = {
 
 var ENEMY_TEMPLATE = {
 	hp: 2048, 
+	sw: 32, 
+	sh: 32, 
+	w: 32, 
+	h: 32, 
+	x: 250, 
+	y: 80, 
+	r: 20, 
 	move: ENEMY.MOVE_NONE, 
 	shot: ENEMY.SHOT_NONE, 
 	draw: ENEMY.DRAW_NORMAL, 
@@ -112,6 +119,7 @@ function Enemy(data)
 		self.lvl++;
 		self.state = 0;
 		self.hp = self.mhp;
+		field.clear_shot(GROUP.MIKATA);
 		if (self.lvl >= self.data.lvl_name.length)
 		{
 			self.data.die(field, self);

@@ -57,6 +57,10 @@ function fdice(x, y, z)
 	{
 		res += Math.random()*y;
 	}
+	if (is_ndef(z))
+	{
+		return res;
+	}
 	return res+z;
 }
 

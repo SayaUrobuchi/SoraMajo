@@ -11,16 +11,10 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 	img: image.PURIN_BATTLE, 
 	sx: 32, 
 	sy: 0, 
-	sw: 32, 
-	sh: 32, 
-	w: 32, 
-	h: 32, 
-	x: 250, 
-	y: 80, 
-	r: 20, 
 	lvl_name: [
 		"歡樂送、雷雷戳", 
 		"獵奇圖大亂射", 
+		"風紀．制裁之刃", 
 	], 
 	shot: function (field, self)
 	{
@@ -161,6 +155,81 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 							]);
 						}
 					}
+				}
+				break;
+			}
+			break;
+		case 2:
+			switch (self.state)
+			{
+			case 0:
+				self.acnt = 0;
+				self.bcnt = 0;
+				self.delay = 64;
+				self.state = 1;
+				break;
+			case 1:
+				self.delay--;
+				if (self.delay <= 0)
+				{
+					self.state = 2;
+				}
+				break;
+			case 2:
+				if (self.acnt++ >= 20)
+				{
+					self.acnt = 0;
+					self.bcnt++;
+					var mc = field.get_mchara();
+					if (is_def(mc))
+					{
+						var ang = self.angle_to(mc);
+						var rang = ang + deg(fdice(3, 30, -45));
+						if (self.bcnt == 7)
+						{
+							self.bcnt = 0;
+							rang = ang;
+						}
+						var spd = 1 + fdice(2, 1);
+						var d = 20, dd = 20;
+						for (var i=2; i>=0; i--)
+						{
+							self.fire(field, [
+								extend(PURIN_SHOT_TEMPLATE, {
+									ox: Math.cos(rang+i*deg(dd))*d, 
+									oy: Math.sin(rang+i*deg(dd))*d, 
+									dx: Math.cos(rang), 
+									dy: Math.sin(rang), 
+									spd: spd, 
+								}), 
+							]);
+							if (i)
+							{
+							self.fire(field, [
+								extend(PURIN_SHOT_TEMPLATE, {
+									ox: Math.cos(rang-i*deg(dd))*d, 
+									oy: Math.sin(rang-i*deg(dd))*d, 
+									dx: Math.cos(rang), 
+									dy: Math.sin(rang), 
+									spd: spd, 
+								}), 
+							]);
+							}
+						}
+					}
+				}
+				if (self.bcnt++ >= 4)
+				{
+					self.bcnt = 0;
+					var ang = Math.random()*Math.PI*2;
+					var spd = Math.random()*1+0.5;
+					self.fire(field, [
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(ang), 
+							dy: Math.sin(ang), 
+							spd: spd, 
+						}), 
+					]);
 				}
 				break;
 			}
