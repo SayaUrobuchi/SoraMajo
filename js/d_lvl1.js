@@ -12,8 +12,8 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 	sx: 32, 
 	sy: 0, 
 	lvl_name: [
-		"歡樂送、雷雷戳", 
 		"獵奇圖大亂射", 
+		"歡樂送、雷雷戳", 
 		"風紀．制裁之刃", 
 		"毒布丁的抱擁", 
 	], 
