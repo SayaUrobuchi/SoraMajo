@@ -15,6 +15,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 		"歡樂送、雷雷戳", 
 		"獵奇圖大亂射", 
 		"風紀．制裁之刃", 
+		"毒布丁的抱擁", 
 	], 
 	shot: function (field, self)
 	{
@@ -64,7 +65,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 				self.acnt = 0;
 				self.aang = 0;
 				self.bcnt = 0;
-				self.delay = 128;
+				self.delay = 48;
 				self.state = 1;
 				break;
 			case 1:
@@ -179,15 +180,15 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 				if (self.acnt++ >= 20)
 				{
 					self.acnt = 0;
-					self.bcnt++;
+					self.ccnt++;
 					var mc = field.get_mchara();
 					if (is_def(mc))
 					{
 						var ang = self.angle_to(mc);
 						var rang = ang + deg(fdice(3, 30, -45));
-						if (self.bcnt == 7)
+						if (self.ccnt == 7)
 						{
-							self.bcnt = 0;
+							self.ccnt = 0;
 							rang = ang;
 						}
 						var spd = 1 + fdice(2, 1);
@@ -230,6 +231,73 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 							spd: spd, 
 						}), 
 					]);
+				}
+				break;
+			}
+			break;
+		case 3:
+			switch (self.state)
+			{
+			case 0:
+				self.acnt = 0;
+				self.bcnt = 0;
+				self.ccnt = 0;
+				self.dcnt = 0;
+				self.delay = 64;
+				self.state = 1;
+				break;
+			case 1:
+				self.delay--;
+				if (self.delay <= 0)
+				{
+					self.state = 2;
+				}
+				break;
+			case 2:
+				if (self.acnt++ >= 20)
+				{
+					self.acnt = 0;
+					var ang = Math.random()*Math.PI*2;
+					var spd = Math.random()*1+0.5;
+					self.fire(field, [
+						extend(PURIN_SHOT_TEMPLATE, {
+							dx: Math.cos(ang), 
+							dy: Math.sin(ang), 
+							spd: spd, 
+							update: SHOT.UPDATE_TO_MC, 
+							ang: ang, 
+							limit_ang: 0.01, 
+							limit_total_ang: deg(105), 
+						}), 
+					]);
+				}
+				if (self.bcnt++ >= 8)
+				{
+					self.bcnt = 0;
+					self.dcnt++;
+					if (self.dcnt > 6)
+					{
+						if (self.dcnt > 11)
+						{
+							if (Math.random() > 0.7)
+							{
+								self.dcnt = 0;
+							}
+						}
+						var mc = field.get_mchara();
+						if (is_def(mc))
+						{
+							var ang = self.angle_to(mc);
+							var spd = 2;
+							self.fire(field, [
+								extend(PURIN_SHOT_TEMPLATE, {
+									dx: Math.cos(ang), 
+									dy: Math.sin(ang), 
+									spd: spd, 
+								}), 
+							]);
+						}
+					}
 				}
 				break;
 			}
