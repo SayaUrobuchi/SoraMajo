@@ -34,6 +34,7 @@ function STGScene()
 	
 	self.init = function ()
 	{
+		self.fid = 0;
 		self.state = STG.NONE;
 		self.range_x = 500;
 		self.range_y = canvas.height;
@@ -63,6 +64,7 @@ function STGScene()
 	
 	self.update = function (g)
 	{
+		self.fid++;
 		switch (self.state)
 		{
 		case STG.NONE:
@@ -248,12 +250,12 @@ function STGScene()
 				for (var k=0; k<group_list.length; k++)
 				{
 					var tar = group_list[k];
-					if (!tar.is_disappear(self))
+					if (tar.can_hit() && !tar.is_disappear(self))
 					{
 						for (var j=0; j<attack_list.length; j++)
 						{
 							var atk = attack_list[j];
-							if (!atk.is_disappear(self))
+							if (atk.can_hit() && !atk.is_disappear(self))
 							{
 								if (is_collide(atk.get_collider(), tar.get_collider()))
 								{
@@ -418,8 +420,11 @@ function STGScene()
 	self.update_sub = function (g)
 	{
 		g.translate(UI.SUB.OFFSET_X, UI.SUB.OFFSET_Y);
+		self.mc = self.get_mchara();
 		self.update_sub_background(g);
 		self.update_sub_zanki(g);
+		self.update_sub_mana(g);
+		self.update_sub_ctrl(g);
 		g.translate(-UI.SUB.OFFSET_X, -UI.SUB.OFFSET_Y);
 	}
 	
@@ -431,15 +436,44 @@ function STGScene()
 	
 	self.update_sub_zanki = function (g)
 	{
-		g.fillStyle = COLOR.TEXT;
+		g.fillStyle = UI.SUB.COLOR;
 		g.font = UI.SUB.FONT;
 		g.textAlign = "left";
 		g.textBaseline = "top";
 		g.fillText(UI.SUB.ZANKI_TEXT, UI.SUB.ZANKI_X, UI.SUB.ZANKI_Y);
-		var mc = self.get_mchara();
+		var mc = self.mc;
 		if (mc)
 		{
 			mc.draw_zanki(self, g);
+		}
+	}
+	
+	self.update_sub_mana = function (g)
+	{
+		g.fillStyle = UI.SUB.COLOR;
+		g.font = UI.SUB.FONT;
+		g.textAlign = "left";
+		g.textBaseline = "top";
+		g.fillText(UI.SUB.MANA_TEXT, UI.SUB.MANA_X, UI.SUB.MANA_Y);
+		var mc = self.mc;
+		if (mc)
+		{
+			mc.draw_mana(self, g);
+		}
+	}
+	
+	self.update_sub_ctrl = function (g)
+	{
+		g.fillStyle = UI.SUB.COLOR;
+		g.font = UI.SUB.FONT;
+		g.textAlign = "left";
+		g.textBaseline = "top";
+		var x = UI.SUB.CTRL_X;
+		var y = UI.SUB.CTRL_Y;
+		for (var i=0; i<UI.SUB.CTRL_TEXT.length; i++)
+		{
+			var t = UI.SUB.CTRL_TEXT[i];
+			g.fillText(t, x, y+i*UI.SUB.CTRL_H);
 		}
 	}
 	
@@ -565,7 +599,11 @@ function STGScene()
 	
 	self.clear_shot = function (group)
 	{
-		self.attack_list[group] = [];
+		var ary = self.attack_list[group];
+		for (var i=0; i<ary.length; i++)
+		{
+			ary[i].clear_shot(self);
+		}
 	}
 	
 	self.init();

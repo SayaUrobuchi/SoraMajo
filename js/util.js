@@ -1,4 +1,6 @@
 
+var PI2 = Math.PI * 2;
+
 function DO_NOTHING()
 {
 }
@@ -77,6 +79,16 @@ function sqrt_f(st, ed, now)
 function pow2_f(st, ed, now)
 {
 	return st + (ed-st)*(now*now);
+}
+
+function sin_f(st, ed, now)
+{
+	return st + (ed-st)*Math.sin(now*deg(90));
+}
+
+function cos_f(st, ed, now)
+{
+	return st + (ed-st)*(1-Math.cos(now*deg(90)));
 }
 
 function is_collide(p, q)

@@ -19,7 +19,7 @@ var ENEMY = {
 };
 
 var ENEMY_TEMPLATE = {
-	hp: 2048, 
+	hp: 512, 
 	sw: 32, 
 	sh: 32, 
 	w: 32, 
@@ -52,8 +52,9 @@ function Enemy(data)
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE)
+		if (field.state == STG.BATTLE && self.fid != field.fid)
 		{
+			self.fid = field.fid;
 			self.data.move(field, self);
 			self.data.shot(field, self);
 			self.update_hp(field);

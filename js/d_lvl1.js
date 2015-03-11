@@ -31,7 +31,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 				break;
 			case 1:
 				self.acnt++;
-				if (self.acnt >= 15)
+				if (self.acnt >= 7)
 				{
 					self.acnt = 0;
 					self.bcnt++;
@@ -76,7 +76,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 				}
 				break;
 			case 2:
-				if (self.acnt++ >= 48)
+				if (self.acnt++ >= 24)
 				{
 					self.acnt = 0;
 					var spd = 4;
@@ -104,7 +104,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 					]);
 					self.aang += Math.PI / 6;
 				}
-				if (self.bcnt++ >= 170-(40*(1-self.real_hp_rate)))
+				if (self.bcnt++ >= 90-(25*(1-self.real_hp_rate)))
 				{
 					self.bcnt = 0;
 					var mc = field.get_mchara();
@@ -166,6 +166,7 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 			case 0:
 				self.acnt = 0;
 				self.bcnt = 0;
+				self.ccnt = 0;
 				self.delay = 64;
 				self.state = 1;
 				break;
@@ -180,13 +181,13 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 				if (self.acnt++ >= 20)
 				{
 					self.acnt = 0;
-					self.ccnt++;
 					var mc = field.get_mchara();
 					if (is_def(mc))
 					{
 						var ang = self.angle_to(mc);
 						var rang = ang + deg(fdice(3, 30, -45));
-						if (self.ccnt == 7)
+						self.ccnt++;
+						if (self.ccnt >= 7)
 						{
 							self.ccnt = 0;
 							rang = ang;
@@ -241,7 +242,6 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 			case 0:
 				self.acnt = 0;
 				self.bcnt = 0;
-				self.ccnt = 0;
 				self.dcnt = 0;
 				self.delay = 64;
 				self.state = 1;

@@ -8,6 +8,7 @@ var audio = {};
 
 var IMAGE = {
 	MINYAN_BATTLE: "p/minyan.png", 
+	MINYAN_SP: "p/minyan_sp.png", 
 	PURIN_BATTLE: "p/purin.png", 
 	MINYAN_GOOD: "p/minyan_good.png", 
 	MINYAN_NOTGOOD: "p/minyan_notgood.png", 
@@ -56,6 +57,8 @@ var COLOR = {
 	BLUE: "#0000FF", 
 	DARK_RED: "#AA0000", 
 	DARK_RED2: "#440000", 
+	PURPLE: "#FF00FF", 
+	YELLOW: "#FFFF66", 
 	TRANSPARENT: rgba(0, 0, 0, 0), 
 };
 
@@ -87,9 +90,25 @@ UI.SUB = {
 	HEIGHT: UI.SCREEN.HEIGHT, 
 	BACKGROUND_COLOR: rgb(0x44, 0x44, 0xAA), 
 	FONT: "24px "+UI.DEFAULT_FONT, 
+	COLOR: COLOR.TEXT, 
 	ZANKI_TEXT: "殘機", 
 	ZANKI_X: 10, 
 	ZANKI_Y: 10, 
+	MANA_TEXT: "魔力", 
+	MANA_X: 10, 
+	MANA_Y: 44, 
+	MANA_BAR_WIDTH: 128, 
+	MANA_BAR_HEIGHT: 20, 
+	MANA_COLOR: [COLOR.DARK_RED, COLOR.YELLOW, COLOR.GREEN], 
+	CTRL_TEXT: [
+		"移動：←↓↑→", 
+		"魔彈：Z", 
+		"結界：X", 
+		"專注：SHIFT", 
+	], 
+	CTRL_X: 10, 
+	CTRL_Y: 470, 
+	CTRL_H: 30, 
 };
 
 UI.MIKATA = {
@@ -100,6 +119,7 @@ UI.MIKATA = {
 	MESS_EY: -20, 
 	MESS_COLOR: COLOR.RED, 
 	MESS_DEAD: "DEAD!", 
+	MESS_BOMB: "ULT!", 
 	MESS_FSPD: 0.04, 
 	MESS_SFCNT: 48, 
 	MESS_ASPD: 0.03, 

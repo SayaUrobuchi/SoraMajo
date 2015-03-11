@@ -16,6 +16,8 @@ function Chara()
 		self.img = [];
 		self.disappear = false;
 		self.hp = 1;
+		self.hit_flag = true;
+		self.fid = -1;
 	}
 	
 	self.draw = function (field, g)
@@ -85,6 +87,15 @@ function Chara()
 	self.is_disappear = function (field)
 	{
 		return self.disappear;
+	}
+	
+	self.can_hit = function ()
+	{
+		return self.hit_flag;
+	}
+	
+	self.clear_shot = function (field)
+	{
 	}
 	
 	self.get_collider = function ()

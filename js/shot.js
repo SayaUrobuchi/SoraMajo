@@ -17,7 +17,7 @@ var SHOT = {
 	}, 
 	DISAPPEAR_OUT_RANGE: function (field, self)
 	{
-		return self.hp <= 0 || 
+		return self.hp <= 0 || self.disappear || 
 			self.x < 0 || self.x > field.range_x || self.y < 0 || self.y > field.range_y;
 	}, 
 	UPDATE_TO_MC: function (field, self)
@@ -49,6 +49,14 @@ var SHOT = {
 			self.data.dy = Math.sin(self.data.ang);
 		}
 	}, 
+	HIT_MC: function (field, self)
+	{
+		var mc = field.get_mchara();
+		if (mc)
+		{
+			mc.add_mana(mc.mana_hit);
+		}
+	}, 
 };
 
 var SHOT_TEMPLATE = {
@@ -58,6 +66,7 @@ var SHOT_TEMPLATE = {
 	draw: SHOT.DRAW_NORMAL, 
 	move: SHOT.MOVE_LINE, 
 	update: DO_NOTHING, 
+	hit: DO_NOTHING, 
 	is_disappear: SHOT.DISAPPEAR_OUT_RANGE, 
 };
 
@@ -72,12 +81,14 @@ function Shot(data)
 		self.target = data.target;
 		self.data = data;
 		self.r = data.r;
+		self.clear_spd = 0.04;
 	}
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE)
+		if (field.state == STG.BATTLE && field.fid != self.fid)
 		{
+			self.fid = field.fid;
 			data.update(field, self);
 			data.move(field, self);
 		}
@@ -85,12 +96,40 @@ function Shot(data)
 	
 	self.draw = function (field, g)
 	{
+		if (self.clear_flag)
+		{
+			self.clear_p += self.clear_spd;
+			if (self.clear_p > 1)
+			{
+				self.clear_p = 1;
+				self.disappear = true;
+			}
+		}
+		var temp = g.globalAlpha;
+		g.globalAlpha = sin_f(1, 0, self.clear_p);
 		data.draw(field, g, self);
+		g.globalAlpha = temp;
+	}
+	
+	self.hit = function (field)
+	{
+		self.data.hit(field, self);
+		self.die(field);
 	}
 	
 	self.is_disappear = function (field)
 	{
 		return data.is_disappear(field, self);
+	}
+	
+	self.clear_shot = function (field)
+	{
+		if (self.hit_flag)
+		{
+			self.hit_flag = false;
+			self.clear_flag = true;
+			self.clear_p = 0;
+		}
 	}
 	
 	self.init();
