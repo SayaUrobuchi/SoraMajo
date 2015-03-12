@@ -6,6 +6,8 @@ var STG = {
 	START: 2, 
 	BATTLE: 3, 
 	GAME_OVER: 4, 
+	ENEMY_DEFEAT: 5, 
+	CLEAR: 6, 
 	EVENT: 8, 
 	DONE: 9, 
 	ANI_IN: 32, 
@@ -17,6 +19,7 @@ var STG = {
 var STGEVENT = {
 	TALK: 1, 
 	ENEMY: 2, 
+	NEXT: 3, 
 };
 
 var STG_TALK = {
@@ -83,7 +86,7 @@ function STGScene()
 			break;
 		case STG.START:
 			self.state = STG.EVENT;
-			self.ss = STG.DONE;
+			self.ss = STG.READY;
 			self.next_state = STG.BATTLE;
 			self.event = self.stage.events.start;
 			self.event_idx = 0;
@@ -98,17 +101,38 @@ function STGScene()
 				self.clear_input();
 			}
 			break;
-		case STG.WIN:
+		case STG.ENEMY_DEFEAT:
+			if (self.ss > 0)
+			{
+				self.state = STG.EVENT;
+				self.ss = STG.READY;
+				self.next_state = STG.CLEAR;
+				self.event = self.stage.events.clear;
+				self.event_idx = 0;
+			}
 			break;
-		case STG.LOSE:
+		case STG.CLEAR:
+			if (self.ss == STG.READY)
+			{
+				self.clear_input();
+				self.fcnt = 0;
+				self.ss = STG.START;
+			}
 			break;
 		case STG.EVENT:
+			if (self.ss == STG.READY)
+			{
+				self.clear_talk();
+				self.clear_input();
+				self.ss = STG.DONE;
+			}
 			break;
 		}
 		self.update_loading(g);
 		self.update_main(g);
 		self.update_sub(g);
 		self.update_gameover(g);
+		self.update_clear(g);
 	}
 	
 	self.update_loading = function (g)
@@ -194,6 +218,31 @@ function STGScene()
 		}
 	}
 	
+	self.update_clear = function (g)
+	{
+		if (self.state != STG.CLEAR || self.ss == STG.READY)
+		{
+			return;
+		}
+		self.fcnt++;
+		g.font = UI.CLEAR.FONT;
+		g.textAlign = "center";
+		g.textBaseline = "middle";
+		g.fillStyle = UI.CLEAR.COLOR;
+		g.fillText(UI.CLEAR.TEXT, UI.CLEAR.X, UI.CLEAR.Y);
+		if ((self.fcnt & 127) < 96)
+		{
+			g.font = UI.CLEAR.FONT2
+			g.fillStyle = UI.CLEAR.COLOR2;
+			g.fillText(UI.CLEAR.TEXT2, UI.CLEAR.X2, UI.CLEAR.Y2);
+		}
+		if (self.input[KEY.BOMB])
+		{
+			self.stage = level[self.next_stage];
+			self.state = STG.START;
+		}
+	}
+	
 	self.update_main = function (g)
 	{
 		if (self.state <= STG.LOADING)
@@ -272,7 +321,7 @@ function STGScene()
 	
 	self.update_event = function (g)
 	{
-		if (self.state != STG.EVENT)
+		if (self.state != STG.EVENT || self.ss == STG.READY)
 		{
 			return;
 		}
@@ -306,6 +355,9 @@ function STGScene()
 			{
 				self.update_talk(g);
 			}
+			break;
+		case STGEVENT.NEXT:
+			self.next_stage = self.cur_event.id;
 			break;
 		}
 	}

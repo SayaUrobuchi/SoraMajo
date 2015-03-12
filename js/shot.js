@@ -86,7 +86,7 @@ function Shot(data)
 	
 	self.update = function (field)
 	{
-		if (field.state == STG.BATTLE && field.fid != self.fid)
+		if ((field.state == STG.BATTLE || field.state == STG.ENEMY_DEFEAT) && field.fid != self.fid)
 		{
 			self.fid = field.fid;
 			data.update(field, self);

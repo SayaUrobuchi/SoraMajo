@@ -1,21 +1,21 @@
 
-var PURIN_SHOT_TEMPLATE = extend(SHOT_TEMPLATE, {
+var SHOKUSYU_SHOT_TEMPLATE = extend(SHOT_TEMPLATE, {
 	r: 4, 
 	dr: 6, 
-	color: COLOR.GRAY, 
+	color: COLOR.PURPLE, 
 	out_color: COLOR.RED, 
 	target: GROUP.MIKATA, 
 });
 
-enemy.purin = extend(ENEMY_TEMPLATE, {
+enemy.shokusyu = extend(ENEMY_TEMPLATE, {
 	img: image.PURIN_BATTLE, 
 	sx: 32, 
-	sy: 0, 
+	sy: 96, 
 	lvl_name: [
-		"獵奇圖大亂射", 
-		"歡樂送、雷雷戳", 
-		"風紀．制裁之刃", 
-		"毒布丁的抱擁", 
+		"襲來！美少女触手", 
+		"漫天雪雨", 
+		"必殺．触手乱舞", 
+		"奧義．千本触", 
 	], 
 	shot: function (field, self)
 	{
@@ -306,27 +306,17 @@ enemy.purin = extend(ENEMY_TEMPLATE, {
 	}, 
 });
 
-level[1] = extend(LEVEL_TEMPLATE, {
+level[2] = extend(LEVEL_TEMPLATE, {
 	events: {
 		start: [
 			extend(LEVEL_TALK_TEMPLATE, {
-				name: "彌兒", 
+				name: "触翔", 
 				text: [
-					"真是個適合散步的好天氣。", 
-					"說不定會遇上什麼好事呢？", 
-				], 
-				text_loc: STG_TALK.TEXT_TOP, 
-				img: TACHIE.MINYAN_GOOD, 
-				img_loc: STG_TALK.TACHIE_LEFT, 
-			}), 
-			extend(LEVEL_TALK_TEMPLATE, {
-				name: "丁丁", 
-				text: [
-					"啊─啊──無聊無聊無聊！", 
-					"…嗯？這不是彌兒嗎？", 
+					"喔、喔喔！", 
+					"彌兒舔舔 >Q<", 
 				], 
 				text_loc: STG_TALK.TEXT_BOT, 
-				img: TACHIE.PURIN_NOTGOOD, 
+				img: TACHIE.SHOKUSYU_GOOD, 
 				img_loc: STG_TALK.TACHIE_RIGHT, 
 			}), 
 			extend(LEVEL_TALK_TEMPLATE, {
@@ -470,7 +460,7 @@ level[1] = extend(LEVEL_TEMPLATE, {
 				img_loc: STG_TALK.TACHIE_LEFT, 
 			}), 
 			extend(LEVEL_ENEMY_TEMPLATE, {
-				enemy: enemy.purin, 
+				enemy: enemy.shokusyu, 
 			}), 
 		], 
 		clear: [

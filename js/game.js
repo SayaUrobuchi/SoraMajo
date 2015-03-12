@@ -10,6 +10,7 @@ var IMAGE = {
 	MINYAN_BATTLE: "p/minyan.png", 
 	MINYAN_SP: "p/minyan_sp.png", 
 	PURIN_BATTLE: "p/purin.png", 
+	SHOKUSYU_BATTLE: "p/shokusyu.png", 
 	MINYAN_GOOD: "p/minyan_good.png", 
 	MINYAN_NOTGOOD: "p/minyan_notgood.png", 
 	MINYAN_ANGRY: "p/minyan_angry.png", 
@@ -17,6 +18,7 @@ var IMAGE = {
 	MINYAN_HAKI: "p/minyan_haki.png", 
 	PURIN_LOL: "p/purin_lol.png", 
 	PURIN_NOTGOOD: "p/purin_notgood.png", 
+	SHOKUSYU_GOOD: "p/shokusyu_good.png", 
 };
 var AUDIO = {};
 
@@ -67,7 +69,8 @@ COLOR.TALK_BACK = COLOR.DARK_RED;
 COLOR.TALK_BACK_INACTIVE = COLOR.DARK_RED2;
 
 var UI = {
-	DEFAULT_FONT: "DFKai-SB consolas", 
+	DEFAULT_FONT: "DFKai-SB", 
+	DEFAULT_ASCII_FONT: "monospace", 
 };
 
 UI.SCREEN = {
@@ -112,7 +115,7 @@ UI.SUB = {
 };
 
 UI.MIKATA = {
-	MESS_FONT: "14px "+UI.DEFAULT_FONT, 
+	MESS_FONT: "14px "+UI.DEFAULT_ASCII_FONT, 
 	MESS_SX: 0, 
 	MESS_SY: 0, 
 	MESS_EX: 0, 
@@ -164,5 +167,18 @@ UI.GAMEOVER = {
 	X2: UI.SCREEN.WIDTH/2, 
 	Y2: UI.SCREEN.HEIGHT/2+60, 
 	TEXT2: "死不服輸的話，請按R鍵再次投幣", 
+};
+
+UI.CLEAR = {
+	FONT: "80px "+UI.DEFAULT_ASCII_FONT, 
+	COLOR: COLOR.TEXT, 
+	X: UI.SCREEN.WIDTH/2, 
+	Y: UI.SCREEN.HEIGHT/2, 
+	TEXT: "STAGE CLEAR!!", 
+	FONT2: "24px "+UI.DEFAULT_ASCII_FONT, 
+	COLOR2: COLOR.RED, 
+	X2: UI.SCREEN.WIDTH/2, 
+	Y2: UI.SCREEN.HEIGHT/2+60, 
+	TEXT2: "PRESS X TO CONTINUE", 
 };
 

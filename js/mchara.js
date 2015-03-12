@@ -265,10 +265,11 @@ function MainChara()
 			g.beginPath();
 			var r = sin_f(0, UI.SCREEN.WIDTH, p);
 			g.arc(self.bx, self.by, r, 0, PI2);
-			var c = g.createRadialGradient(self.bx, self.by, r*0.8, self.bx, self.by, r);
-			c.addColorStop(0, "#FFFF99");
-			c.addColorStop(0.4, "#FF9966");
-			c.addColorStop(1, "#FF5050");
+			var c = g.createRadialGradient(self.bx, self.by, 0, self.bx, self.by, r);
+			c.addColorStop(0, "#FFFF66");
+			c.addColorStop(0.4, "#FF6600");
+			c.addColorStop(0.8, "#FF0000");
+			c.addColorStop(1, "#000000");
 			g.fillStyle = c;
 			g.fill();
 			g.globalAlpha = temp;

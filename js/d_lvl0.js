@@ -16,6 +16,10 @@ var LEVEL_ENEMY_TEMPLATE = extend(LEVEL_EVENT_TEMPLATE, {
 	type: STGEVENT.ENEMY, 
 });
 
+var LEVEL_NEXT_TEMPLATE = extend(LEVEL_EVENT_TEMPLATE, {
+	type: STGEVENT.NEXT, 
+});
+
 var TACHIE_TEMPLATE = {
 };
 
@@ -52,6 +56,11 @@ var TACHIE = {
 	}), 
 	PURIN_NOTGOOD: extend(TACHIE_TEMPLATE, {
 		img: image.PURIN_NOTGOOD, 
+		w: 352, 
+		h: 415, 
+	}), 
+	SHOKUSYU_GOOD: extend(TACHIE_TEMPLATE, {
+		img: image.SHOKUSYU_GOOD, 
 		w: 352, 
 		h: 415, 
 	}), 
