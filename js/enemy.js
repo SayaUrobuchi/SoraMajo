@@ -19,7 +19,7 @@ var ENEMY = {
 };
 
 var ENEMY_TEMPLATE = {
-	hp: 12, 
+	hp: 512, 
 	sw: 32, 
 	sh: 32, 
 	w: 32, 
@@ -48,7 +48,7 @@ function Enemy(data)
 		self.lvl = 0;
 		self.state = 0;
 		self.hp_bar_rate = 0;
-		self.lvl = 3;
+		//self.lvl = 3;
 	};
 	
 	self.update = function (field)

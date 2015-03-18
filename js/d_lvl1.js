@@ -525,7 +525,7 @@ level[1] = extend(LEVEL_TEMPLATE, {
 				img_loc: STG_TALK.TACHIE_LEFT, 
 			}), 
 			extend(LEVEL_NEXT_TEMPLATE, {
-				id: 2, 
+				id: 1, 
 			}), 
 		], 
 	}, 
